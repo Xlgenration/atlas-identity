@@ -22,17 +22,36 @@ export default function Assessment() {
 
   const router = useRouter();
 
-  const startAnalysis = () => {
+  const startAnalysis = async () => {
     if (!isFormValid()) return;
     
     setIsAnalyzing(true);
     
-    setTimeout(() => {
-      const namePart = data.name.toLowerCase().replace(/\s+/g, '');
-      const datePart = data.birthDate.replace(/[^0-9]/g, '');
-      const randomPart = Math.random().toString(36).substr(2, 5);
-      router.push(`/profile/${namePart}-${datePart}-${randomPart}`);
-    }, 3000);
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+
+      const result = await response.json();
+      
+      // Store the result in localStorage
+      localStorage.setItem('atlasAnalysis', JSON.stringify(result));
+      
+      // Navigate to profile page with the generated ID
+      router.push(`/profile/${result.id}`);
+    } catch (error) {
+      console.error('Analysis error:', error);
+      setIsAnalyzing(false);
+      alert('Fehler bei der Analyse. Bitte versuche es erneut.');
+    }
   };
 
   const isFormValid = (): boolean => {
