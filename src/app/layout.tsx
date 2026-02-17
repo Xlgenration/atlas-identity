@@ -38,21 +38,9 @@ function StarfieldBackground() {
   return (
     <div className="starfield">
       {/* Static stars */}
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
-      <div className="star"></div>
+      {Array.from({ length: 30 }, (_, i) => (
+        <div key={i} className="star"></div>
+      ))}
       
       {/* Constellation lines */}
       <div className="constellation-line"></div>
@@ -61,6 +49,14 @@ function StarfieldBackground() {
       {/* Shooting stars */}
       <div className="shooting-star"></div>
       <div className="shooting-star"></div>
+      
+      {/* Floating orbs */}
+      <div className="floating-orb"></div>
+      <div className="floating-orb"></div>
+      <div className="floating-orb"></div>
+      <div className="floating-orb"></div>
+      <div className="floating-orb"></div>
+      <div className="floating-orb"></div>
     </div>
   );
 }

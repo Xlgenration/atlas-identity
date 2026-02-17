@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { 
   ArrowLeft, Heart, Users, TrendingUp, AlertTriangle, Sparkles, Star, 
   RotateCcw, Crown, Gem, Wand2, Target, Brain, MessageCircle, Zap, 
-  Sun, Moon, Fire, Calendar, Clock, MapPin, Download, Share2, Award,
+  Sun, Moon, Flame, Calendar, Clock, MapPin, Download, Share2, Award,
   Shield, Eye, Coffee, Music, Gamepad2, Home
 } from 'lucide-react';
 
