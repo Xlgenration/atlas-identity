@@ -74,8 +74,8 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Big purple gradient button */}
-        <div className="fadeIn delay-300">
+        {/* Two CTA Buttons */}
+        <div className="fadeIn delay-300" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
           <Link 
             href="/assessment"
             className="btn-primary"
@@ -85,17 +85,39 @@ export default function Home() {
               borderRadius: '12px',
               textDecoration: 'none',
               display: 'inline-block',
-              marginBottom: '16px'
+              width: '100%',
+              maxWidth: '400px',
+              textAlign: 'center'
             }}
           >
-            Starte deine Reise →
+            Mich selbst entdecken →
           </Link>
           
-          {/* Small subtitle */}
+          <Link 
+            href="/couple"
+            style={{
+              fontSize: '20px',
+              padding: '20px 40px',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              width: '100%',
+              maxWidth: '400px',
+              textAlign: 'center',
+              background: 'transparent',
+              border: '2px solid #a855f7',
+              color: '#a855f7',
+              fontWeight: '600',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Kompatibilität prüfen ♡
+          </Link>
+          
           <p style={{
             fontSize: '14px',
             color: '#888',
-            margin: '0'
+            margin: '8px 0 0'
           }}>
             2 Minuten • Kostenlos • Sofortige Ergebnisse
           </p>
