@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function Home() {
@@ -9,88 +6,60 @@ export default function Home() {
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
       
-      {/* Main content - single screen */}
+      {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
+        <div className="max-w-3xl mx-auto text-center space-y-10">
           
-          {/* Logo/Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 mb-8">
-              <span className="text-2xl font-bold text-white">✦</span>
+          {/* Logo */}
+          <div className="animate-fadeIn">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 mb-6">
+              <span className="text-xl font-bold text-white">✦</span>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Emotional headline - create DESIRE and CURIOSITY */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
-            className="space-y-6"
-          >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.9]">
-              <span className="block text-white mb-4">Who Are You</span>
-              <span className="block text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text">Really?</span>
+          {/* Headline */}
+          <div className="animate-fadeIn animation-delay-100">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.9] mb-6">
+              <span className="block text-white mb-3">Who Are You</span>
+              <span className="block bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Really?</span>
             </h1>
             
-            <p className="text-xl sm:text-2xl md:text-3xl text-white/70 font-light leading-relaxed max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
               Most people live their entire lives without truly knowing themselves. 
-              <span className="block mt-2 text-white/90">You're about to change that.</span>
+              <span className="block mt-2 text-white/80 font-normal">You&apos;re about to change that.</span>
             </p>
-          </motion.div>
+          </div>
 
-          {/* What you'll discover - brief but compelling */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
-            className="space-y-8"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-              <div className="text-center space-y-3">
-                <div className="text-purple-400 text-sm font-medium">DISCOVER</div>
-                <div className="text-white/80">Your true nature and hidden gifts</div>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="text-blue-400 text-sm font-medium">UNDERSTAND</div>
-                <div className="text-white/80">Why you think and act the way you do</div>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="text-purple-400 text-sm font-medium">TRANSFORM</div>
-                <div className="text-white/80">Your relationships and life path</div>
-              </div>
+          {/* Three pillars */}
+          <div className="animate-fadeIn animation-delay-200 grid grid-cols-3 gap-4 max-w-lg mx-auto text-center">
+            <div>
+              <div className="text-purple-400 text-xs font-semibold tracking-widest mb-2">DISCOVER</div>
+              <div className="text-white/60 text-sm">Your true nature</div>
             </div>
-          </motion.div>
+            <div>
+              <div className="text-blue-400 text-xs font-semibold tracking-widest mb-2">UNDERSTAND</div>
+              <div className="text-white/60 text-sm">How you connect</div>
+            </div>
+            <div>
+              <div className="text-purple-400 text-xs font-semibold tracking-widest mb-2">TRANSFORM</div>
+              <div className="text-white/60 text-sm">Your life path</div>
+            </div>
+          </div>
 
-          {/* BIG Start Your Journey button */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, ease: "easeOut" }}
-          >
+          {/* CTA Button */}
+          <div className="animate-fadeIn animation-delay-300 pt-4">
             <Link
               href="/assessment"
-              className="group inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-xl font-bold rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-lg font-bold rounded-full shadow-2xl shadow-purple-500/20 transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <span>Start Your Journey</span>
-              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+              Start Your Journey →
             </Link>
             
-            <p className="text-white/50 text-sm mt-6">
-              Takes 2 minutes • Free to start • Profound results
+            <p className="text-white/40 text-xs mt-4 tracking-wide">
+              2 minutes • Free • Instant results
             </p>
-          </motion.div>
+          </div>
 
-        </div>
-      </div>
-      
-      {/* Minimal footer */}
-      <div className="absolute bottom-6 left-6 right-6">
-        <div className="text-center text-white/30 text-sm">
-          © 2024 ATLAS
         </div>
       </div>
     </div>
