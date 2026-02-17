@@ -10,12 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ATLAS — Luxury Identity Mapping Platform",
-  description: "Premium AI-powered identity mapping combining mystical astrology, human design, and personality science. Discover your authentic self with our luxury platform.",
-  keywords: ["luxury astrology", "premium human design", "identity mapping", "AI personality analysis", "mystical self-discovery", "premium astrology app"],
+  title: "ATLAS — Premium Identity Mapping",
+  description: "Discover your authentic self through advanced personality mapping and cosmic insights.",
+  keywords: ["identity mapping", "personality analysis", "self-discovery", "astrology", "human design"],
   openGraph: {
-    title: "ATLAS — Luxury Identity Mapping Platform",
-    description: "Premium AI-powered identity mapping combining mystical astrology, human design, and personality science.",
+    title: "ATLAS — Premium Identity Mapping",
+    description: "Discover your authentic self through advanced personality mapping and cosmic insights.",
     type: "website",
     images: [
       {
@@ -28,38 +28,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ATLAS — Luxury Identity Mapping Platform",
-    description: "Premium AI-powered identity mapping combining mystical astrology, human design, and personality science.",
+    title: "ATLAS — Premium Identity Mapping",
+    description: "Discover your authentic self through advanced personality mapping and cosmic insights.",
   },
   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
-
-function StarfieldBackground() {
-  return (
-    <div className="starfield">
-      {/* Static stars */}
-      {Array.from({ length: 30 }, (_, i) => (
-        <div key={i} className="star"></div>
-      ))}
-      
-      {/* Constellation lines */}
-      <div className="constellation-line"></div>
-      <div className="constellation-line"></div>
-      
-      {/* Shooting stars */}
-      <div className="shooting-star"></div>
-      <div className="shooting-star"></div>
-      
-      {/* Floating orbs */}
-      <div className="floating-orb"></div>
-      <div className="floating-orb"></div>
-      <div className="floating-orb"></div>
-      <div className="floating-orb"></div>
-      <div className="floating-orb"></div>
-      <div className="floating-orb"></div>
-    </div>
-  );
-}
 
 export default function RootLayout({
   children,
@@ -67,12 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} antialiased text-white`}>
-        <StarfieldBackground />
-        <div className="relative min-h-screen">
-          {children}
-        </div>
+    <html lang="en">
+      <body className={`${inter.variable} antialiased`}>
+        {children}
       </body>
     </html>
   );
