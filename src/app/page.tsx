@@ -43,7 +43,8 @@ export default function Home() {
       description: "Unlock the profound mysteries of your authentic self through our AI-powered synthesis of ancient wisdom and modern psychology.",
       color: "from-purple-500 via-violet-500 to-purple-600",
       accent: "purple",
-      highlights: ["Astrological Chart Analysis", "Human Design Mapping", "Personality Insights", "Life Purpose Guidance"]
+      highlights: ["Astrological Chart Analysis", "Human Design Mapping", "Personality Insights", "Life Purpose Guidance"],
+      href: "/assessment"
     },
     {
       icon: Heart,
@@ -53,7 +54,8 @@ export default function Home() {
       description: "Transform your relationship through deep understanding of energetic compatibility and soul-level connection patterns.",
       color: "from-pink-500 via-rose-500 to-red-500",
       accent: "pink",
-      highlights: ["Compatibility Analysis", "Relationship Dynamics", "Communication Patterns", "Growth Opportunities"]
+      highlights: ["Compatibility Analysis", "Relationship Dynamics", "Communication Patterns", "Growth Opportunities"],
+      href: "/couple"
     },
     {
       icon: Users,
@@ -63,7 +65,8 @@ export default function Home() {
       description: "Elevate team performance by understanding the unique energetic signature and gifts each member brings to the collective.",
       color: "from-blue-500 via-cyan-500 to-teal-500",
       accent: "blue",
-      highlights: ["Team Dynamics", "Leadership Styles", "Collaboration Patterns", "Collective Purpose"]
+      highlights: ["Team Dynamics", "Leadership Styles", "Collaboration Patterns", "Collective Purpose"],
+      href: "/assessment"
     }
   ];
 
@@ -228,7 +231,8 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="glass-card p-10 h-full text-center relative overflow-hidden hover:scale-105 transition-all duration-500">
+                <Link href={feature.href} className="block h-full">
+                <div className="glass-card p-10 h-full text-center relative overflow-hidden hover:scale-105 transition-all duration-500 cursor-pointer">
                   {/* Background decoration */}
                   <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.color} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity duration-500`}></div>
                   
@@ -265,13 +269,14 @@ export default function Home() {
                   </div>
 
                   {/* Learn More */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <div className={`text-${feature.accent}-400 font-semibold flex items-center justify-center gap-2 cursor-pointer`}>
+                  <div className="mt-4">
+                    <div className={`text-${feature.accent}-400 font-semibold flex items-center justify-center gap-2 cursor-pointer hover:gap-3 transition-all duration-300`}>
                       Explore Deep
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
