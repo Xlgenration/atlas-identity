@@ -1,159 +1,307 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+interface PersonData {
+  name: string;
+  birthDate: string;
+  birthTime: string;
+  birthPlace: string;
+}
+
+interface CoupleData {
+  person1: PersonData;
+  person2: PersonData;
+}
+
 export default function CouplePage() {
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [data, setData] = useState<CoupleData>({
+    person1: {
+      name: '',
+      birthDate: '',
+      birthTime: '',
+      birthPlace: ''
+    },
+    person2: {
+      name: '',
+      birthDate: '',
+      birthTime: '',
+      birthPlace: ''
+    }
+  });
+
+  const router = useRouter();
+
+  const updatePerson = (person: 'person1' | 'person2', field: keyof PersonData, value: string) => {
+    setData(prev => ({
+      ...prev,
+      [person]: {
+        ...prev[person],
+        [field]: value
+      }
+    }));
+  };
+
+  const isFormValid = (): boolean => {
+    const person1Valid = data.person1.name.trim().length > 0 && 
+                         data.person1.birthDate.length > 0 && 
+                         data.person1.birthTime.length > 0 && 
+                         data.person1.birthPlace.trim().length > 0;
+    
+    const person2Valid = data.person2.name.trim().length > 0 && 
+                         data.person2.birthDate.length > 0 && 
+                         data.person2.birthTime.length > 0 && 
+                         data.person2.birthPlace.trim().length > 0;
+
+    return person1Valid && person2Valid;
+  };
+
+  const startAnalysis = async () => {
+    if (!isFormValid()) return;
+    
+    setIsAnalyzing(true);
+    
+    try {
+      // Analyze both persons separately first
+      const [person1Response, person2Response] = await Promise.all([
+        fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.person1),
+        }),
+        fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.person2),
+        })
+      ]);
+
+      if (!person1Response.ok || !person2Response.ok) {
+        throw new Error('Analysis failed');
+      }
+
+      const person1Analysis = await person1Response.json();
+      const person2Analysis = await person2Response.json();
+
+      // Now analyze couple compatibility
+      const coupleResponse = await fetch('/api/couple', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          person1: person1Analysis,
+          person2: person2Analysis
+        }),
+      });
+
+      if (!coupleResponse.ok) {
+        throw new Error('Couple analysis failed');
+      }
+
+      const coupleResult = await coupleResponse.json();
+      
+      // Store the complete result in localStorage
+      localStorage.setItem('coupleAnalysis', JSON.stringify(coupleResult));
+      
+      // Navigate to couple result page
+      router.push('/couple/result');
+    } catch (error) {
+      console.error('Analysis error:', error);
+      setIsAnalyzing(false);
+      alert('Fehler bei der Analyse. Bitte versuche es erneut.');
+    }
+  };
+
+  if (isAnalyzing) {
+    return (
+      <div className="light-theme" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: '400px', padding: '20px' }}>
+          <div style={{
+            width: '64px',
+            height: '64px',
+            border: '4px solid #e0e0e0',
+            borderTop: '4px solid #a855f7',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 24px'
+          }} />
+          <h2 style={{ fontSize: '28px', color: '#333', fontWeight: '600', marginBottom: '16px' }}>
+            Kompatibilitätsanalyse wird erstellt
+          </h2>
+          <p style={{ fontSize: '18px', color: '#666', lineHeight: '1.6' }}>
+            Beide Profile werden analysiert und Kompatibilität berechnet...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0f', padding: '40px 20px' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+    <div className="light-theme" style={{ minHeight: '100vh', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         
-        <div style={{ marginBottom: '40px' }}>
-          <Link href="/" style={{ color: '#888', textDecoration: 'none', fontSize: '16px', display: 'inline-block', marginBottom: '24px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <Link href="/" style={{ color: '#666', textDecoration: 'none', fontSize: '16px', display: 'inline-block', marginBottom: '32px' }}>
             ← Zurück
           </Link>
-          <h1 style={{ fontSize: '36px', color: '#a855f7', fontWeight: '700', marginBottom: '8px' }}>
+          
+          <h1 style={{ fontSize: '36px', color: '#333', fontWeight: '700', marginBottom: '16px' }}>
             Beziehungs-Kompatibilität
           </h1>
-          <p style={{ fontSize: '18px', color: '#888', lineHeight: '1.6' }}>
-            Tiefgreifende Kompatibilitätsanalyse zwischen zwei Identity Maps
+          <p style={{ fontSize: '18px', color: '#666', lineHeight: '1.6', maxWidth: '500px', margin: '0 auto' }}>
+            Analysiert die Kompatibilität zwischen zwei Partnern basierend auf ihren Identity Blueprints
           </p>
         </div>
 
-        {/* Gesamt-Score */}
-        <div className="card" style={{ textAlign: 'center', marginBottom: '40px', background: 'linear-gradient(135deg, #14141f 0%, #1a1a2e 100%)' }}>
-          <h2 style={{ fontSize: '28px', color: '#64b5f6', marginBottom: '16px', border: 'none' }}>
-            Gesamt-Kompatibilität
-          </h2>
-          <div style={{ fontSize: '64px', fontWeight: '700', color: '#a855f7', marginBottom: '16px' }}>87%</div>
-          <p style={{ fontSize: '20px', color: '#e0e0e0', maxWidth: '600px', margin: '0 auto' }}>
-            Außergewöhnlich starke Kompatibilität mit tiefer emotionaler und spiritueller Resonanz
-          </p>
-        </div>
-
-        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', marginBottom: '40px' }}>
           
-          {/* Kategorie-Analyse */}
-          <div className="card">
-            <h3>Kompatibilitäts-Analyse</h3>
-            <table style={{ marginTop: '20px' }}>
-              <thead>
-                <tr><th>Kategorie</th><th>Wert</th><th>Erkenntnis</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Emotionale Verbindung</td><td style={{ color: '#64b5f6', fontWeight: '600' }}>92%</td><td>Tiefe intuitive Bindung</td></tr>
-                <tr><td>Kommunikationsstil</td><td style={{ color: '#64b5f6', fontWeight: '600' }}>85%</td><td>Ergänzende Ansätze</td></tr>
-                <tr><td>Lebensziele</td><td style={{ color: '#64b5f6', fontWeight: '600' }}>89%</td><td>Gemeinsame Vision</td></tr>
-                <tr><td>Energie-Dynamik</td><td style={{ color: '#a855f7', fontWeight: '600' }}>78%</td><td>Balance nötig</td></tr>
-                <tr><td>Spirituelle Verbindung</td><td style={{ color: '#64b5f6', fontWeight: '600' }}>94%</td><td>Tiefe Seelenresonanz</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Profile */}
-          <div className="card">
-            <h3>Profil-Highlights</h3>
-            <div style={{ marginBottom: '24px' }}>
-              <h4 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '12px' }}>Partner A: Löwe-Sonne, Skorpion-Mond</h4>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const, marginBottom: '16px' }}>
-                <div className="badge">Manifestor</div>
-                <div className="badge">Emotionale Autorität</div>
-                <div className="badge">Profil 3/5</div>
-              </div>
-              <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#888' }}>
-                Natürliche Führungspersönlichkeit mit tiefer emotionaler Intelligenz und transformativer Präsenz
-              </p>
+          {/* Person 1 */}
+          <div className="card" style={{
+            background: 'white',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}>
+            <h3 style={{ fontSize: '24px', color: '#a855f7', fontWeight: '600', marginBottom: '24px', textAlign: 'center' }}>
+              Person 1
+            </h3>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <label className="form-label">Vorname</label>
+              <input
+                type="text"
+                value={data.person1.name}
+                onChange={(e) => updatePerson('person1', 'name', e.target.value)}
+                className="form-input"
+                placeholder="Name von Person 1"
+              />
             </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+              <div>
+                <label className="form-label">Geburtsdatum</label>
+                <input
+                  type="date"
+                  value={data.person1.birthDate}
+                  onChange={(e) => updatePerson('person1', 'birthDate', e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <div>
+                <label className="form-label">Geburtszeit</label>
+                <input
+                  type="time"
+                  value={data.person1.birthTime}
+                  onChange={(e) => updatePerson('person1', 'birthTime', e.target.value)}
+                  className="form-input"
+                />
+              </div>
+            </div>
+
             <div>
-              <h4 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '12px' }}>Partner B: Waage-Sonne, Fische-Mond</h4>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const, marginBottom: '16px' }}>
-                <div className="badge">Generator</div>
-                <div className="badge">Sakrale Autorität</div>
-                <div className="badge">Profil 2/4</div>
-              </div>
-              <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#888' }}>
-                Harmonisches Wesen mit tiefer Empathie und natürlicher Fähigkeit Balance zu schaffen
-              </p>
+              <label className="form-label">Geburtsort</label>
+              <input
+                type="text"
+                value={data.person1.birthPlace}
+                onChange={(e) => updatePerson('person1', 'birthPlace', e.target.value)}
+                className="form-input"
+                placeholder="Stadt, Land"
+              />
             </div>
           </div>
 
-          {/* Stärken */}
-          <div className="card">
-            <h3>Beziehungsstärken</h3>
-            <ul style={{ listStyle: 'none', padding: '0' }}>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#64b5f6' }}>✦</span>
-                <strong style={{ color: '#64b5f6' }}>Ergänzende Energien:</strong> Manifestor-Führung gepaart mit Generator-Ausdauer erzeugt kraftvolle Dynamik
-              </li>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#64b5f6' }}>✦</span>
-                <strong style={{ color: '#64b5f6' }}>Emotionale Tiefe:</strong> Beide Partner schätzen authentischen emotionalen Ausdruck und tiefe Verbindung
-              </li>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#64b5f6' }}>✦</span>
-                <strong style={{ color: '#64b5f6' }}>Gemeinsame Werte:</strong> Beide priorisieren persönliches Wachstum, Authentizität und bedeutsame Beziehungen
-              </li>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#64b5f6' }}>✦</span>
-                <strong style={{ color: '#64b5f6' }}>Kreative Synergie:</strong> Löwe-Kreativität kombiniert mit Waage-Harmonie schafft wunderbare gemeinsame Projekte
-              </li>
-            </ul>
-          </div>
+          {/* Person 2 */}
+          <div className="card" style={{
+            background: 'white',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}>
+            <h3 style={{ fontSize: '24px', color: '#64b5f6', fontWeight: '600', marginBottom: '24px', textAlign: 'center' }}>
+              Person 2
+            </h3>
+            
+            <div style={{ marginBottom: '20px' }}>
+              <label className="form-label">Vorname</label>
+              <input
+                type="text"
+                value={data.person2.name}
+                onChange={(e) => updatePerson('person2', 'name', e.target.value)}
+                className="form-input"
+                placeholder="Name von Person 2"
+              />
+            </div>
 
-          {/* Wachstum */}
-          <div className="card">
-            <h3>Wachstumschancen</h3>
-            <ul style={{ listStyle: 'none', padding: '0' }}>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#a855f7' }}>→</span>
-                <strong style={{ color: '#a855f7' }}>Kommunikations-Timing:</strong> Manifestor muss informieren, Generator muss reagieren — den Prozess des anderen ehren
-              </li>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#a855f7' }}>→</span>
-                <strong style={{ color: '#a855f7' }}>Entscheidungsfindung:</strong> Emotionale Autorität mit sakraler Reaktion in Einklang bringen
-              </li>
-              <li style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px', paddingLeft: '24px', position: 'relative' as const }}>
-                <span style={{ position: 'absolute' as const, left: '0', color: '#a855f7' }}>→</span>
-                <strong style={{ color: '#a855f7' }}>Energie-Management:</strong> Verstehen wann man gemeinsam führt und wann individueller Ausdruck wichtig ist
-              </li>
-            </ul>
-          </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+              <div>
+                <label className="form-label">Geburtsdatum</label>
+                <input
+                  type="date"
+                  value={data.person2.birthDate}
+                  onChange={(e) => updatePerson('person2', 'birthDate', e.target.value)}
+                  className="form-input"
+                />
+              </div>
+              <div>
+                <label className="form-label">Geburtszeit</label>
+                <input
+                  type="time"
+                  value={data.person2.birthTime}
+                  onChange={(e) => updatePerson('person2', 'birthTime', e.target.value)}
+                  className="form-input"
+                />
+              </div>
+            </div>
 
-          {/* Beratung */}
-          <div className="card" style={{ gridColumn: '1 / -1' }}>
-            <h3>Beziehungsberatung</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '32px', marginTop: '20px' }}>
-              <div>
-                <h4 style={{ color: '#64b5f6', fontSize: '20px', marginBottom: '16px' }}>Tägliche Rituale</h4>
-                <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#e0e0e0' }}>
-                  <li style={{ marginBottom: '8px' }}>Gemeinsame Morgen-Intentionen setzen</li>
-                  <li style={{ marginBottom: '8px' }}>Regelmäßige emotionale Check-ins</li>
-                  <li style={{ marginBottom: '8px' }}>Individuelle Verarbeitungszeit respektieren</li>
-                  <li style={{ marginBottom: '8px' }}>Gemeinsame kreative Projekte</li>
-                </ul>
-              </div>
-              <div>
-                <h4 style={{ color: '#64b5f6', fontSize: '20px', marginBottom: '16px' }}>Kommunikations-Tipps</h4>
-                <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#e0e0e0' }}>
-                  <li style={{ marginBottom: '8px' }}>Manifestor: Immer informieren bevor du handelst</li>
-                  <li style={{ marginBottom: '8px' }}>Generator: Vertraue deiner Bauchreaktion</li>
-                  <li style={{ marginBottom: '8px' }}>Beide: Emotionale Wellen ehren</li>
-                  <li style={{ marginBottom: '8px' }}>Heiligen Raum für tiefes Teilen schaffen</li>
-                </ul>
-              </div>
-              <div>
-                <h4 style={{ color: '#64b5f6', fontSize: '20px', marginBottom: '16px' }}>Langzeit-Vision</h4>
-                <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#e0e0e0' }}>
-                  <li style={{ marginBottom: '8px' }}>Gemeinsam etwas Bedeutsames aufbauen</li>
-                  <li style={{ marginBottom: '8px' }}>Authentischen Ausdruck des anderen unterstützen</li>
-                  <li style={{ marginBottom: '8px' }}>Harmonisches Zuhause schaffen</li>
-                  <li style={{ marginBottom: '8px' }}>Andere durch eure Partnerschaft inspirieren</li>
-                </ul>
-              </div>
+            <div>
+              <label className="form-label">Geburtsort</label>
+              <input
+                type="text"
+                value={data.person2.birthPlace}
+                onChange={(e) => updatePerson('person2', 'birthPlace', e.target.value)}
+                className="form-input"
+                placeholder="Stadt, Land"
+              />
             </div>
           </div>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '48px', display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' as const }}>
-          <Link href="/assessment" className="btn-primary">Neue Profile erstellen</Link>
-          <Link href="/" className="btn-primary" style={{ background: 'transparent', border: '2px solid #a855f7', color: '#a855f7' }}>Zurück</Link>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <button
+            onClick={startAnalysis}
+            disabled={!isFormValid()}
+            style={{
+              width: '100%',
+              maxWidth: '400px',
+              padding: '18px',
+              fontSize: '20px',
+              fontWeight: '600',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: isFormValid() ? 'pointer' : 'not-allowed',
+              background: isFormValid() 
+                ? 'linear-gradient(135deg, #a855f7 0%, #64b5f6 100%)'
+                : '#e0e0e0',
+              color: isFormValid() ? 'white' : '#888',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Kompatibilität analysieren
+          </button>
+          
+          {!isFormValid() && (
+            <p style={{ fontSize: '14px', color: '#888', marginTop: '12px' }}>
+              Bitte fülle alle Felder für beide Personen aus
+            </p>
+          )}
+        </div>
+
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', fontSize: '14px', color: '#888', flexWrap: 'wrap' }}>
+            <span>🔒 Alle Daten bleiben privat</span>
+            <span>⚡ Detaillierte Kompatibilitäts-Insights</span>
+            <span>✨ Basierend auf realen Berechnungen</span>
+          </div>
         </div>
       </div>
     </div>
