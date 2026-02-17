@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -51,14 +50,31 @@ export default function Assessment() {
 
   if (isAnalyzing) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto px-6">
-          <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-500 rounded-full animate-spin mx-auto mb-6"></div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Creating Your Profile
+      <div className="light-theme" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: '400px', padding: '20px' }}>
+          <div style={{
+            width: '64px',
+            height: '64px',
+            border: '4px solid #e0e0e0',
+            borderTop: '4px solid #a855f7',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 24px'
+          }} />
+          <h2 style={{
+            fontSize: '28px',
+            color: '#333',
+            fontWeight: '600',
+            marginBottom: '16px'
+          }}>
+            Creating Your Identity Blueprint
           </h2>
-          <p className="text-gray-600">
-            Analyzing your birth data and generating insights...
+          <p style={{
+            fontSize: '18px',
+            color: '#666',
+            lineHeight: '1.6'
+          }}>
+            Analyzing your birth data and generating comprehensive insights...
           </p>
         </div>
       </div>
@@ -66,121 +82,154 @@ export default function Assessment() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-12">
+    <div className="light-theme" style={{ minHeight: '100vh', padding: '40px 20px' }}>
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         
         {/* Header */}
-        <div className="text-center mb-12">
-          <Link href="/" className="inline-flex items-center text-gray-500 hover:text-gray-700 transition-colors mb-8">
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <Link 
+            href="/" 
+            style={{
+              color: '#666',
+              textDecoration: 'none',
+              fontSize: '16px',
+              display: 'inline-block',
+              marginBottom: '32px'
+            }}
+          >
             ← Back to Home
           </Link>
           
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Calculate Your Identity Map
+          <h1 style={{
+            fontSize: '36px',
+            color: '#333',
+            fontWeight: '700',
+            marginBottom: '16px'
+          }}>
+            Your Identity Blueprint
           </h1>
-          <p className="text-lg text-gray-600 max-w-lg mx-auto">
+          <p style={{
+            fontSize: '18px',
+            color: '#666',
+            lineHeight: '1.6',
+            maxWidth: '400px',
+            margin: '0 auto'
+          }}>
             Enter your birth details to generate your personalized analysis
           </p>
         </div>
 
         {/* Clean Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm"
-        >
-          <div className="space-y-8">
-            
-            {/* Name Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                value={data.name}
-                onChange={(e) => setData({ ...data, name: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                placeholder="Enter your full name"
-                autoFocus
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              
-              {/* Birth Date */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Birth Date
-                </label>
-                <input
-                  type="date"
-                  value={data.birthDate}
-                  onChange={(e) => setData({ ...data, birthDate: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                />
-              </div>
-
-              {/* Birth Time */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Birth Time
-                </label>
-                <input
-                  type="time"
-                  value={data.birthTime}
-                  onChange={(e) => setData({ ...data, birthTime: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                />
-              </div>
-              
-            </div>
-
-            {/* Birth Place */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Birth Place
-              </label>
-              <input
-                type="text"
-                value={data.birthPlace}
-                onChange={(e) => setData({ ...data, birthPlace: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
-                placeholder="City, Country"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Enter the city where you were born
-              </p>
-            </div>
-
-            {/* Submit Button */}
-            <div className="pt-4">
-              <button
-                onClick={startAnalysis}
-                disabled={!isFormValid()}
-                className={`w-full py-4 px-6 rounded-lg text-lg font-semibold transition-all duration-300 ${
-                  isFormValid()
-                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl hover:scale-[1.02]'
-                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                }`}
-              >
-                Generate My Analysis
-              </button>
-              
-              {!isFormValid() && (
-                <p className="text-sm text-gray-500 text-center mt-3">
-                  Please fill in all fields to continue
-                </p>
-              )}
-            </div>
-
+        <div className="card" style={{
+          background: 'white',
+          border: '1px solid #e0e0e0',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          marginBottom: '40px'
+        }}>
+          
+          {/* Name Field */}
+          <div style={{ marginBottom: '24px' }}>
+            <label className="form-label">Name</label>
+            <input
+              type="text"
+              value={data.name}
+              onChange={(e) => setData({ ...data, name: e.target.value })}
+              className="form-input"
+              placeholder="Enter your full name"
+              autoFocus
+            />
           </div>
-        </motion.div>
+
+          {/* Birth Date and Time */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1fr 1fr', 
+            gap: '20px',
+            marginBottom: '24px'
+          }}>
+            <div>
+              <label className="form-label">Birth Date</label>
+              <input
+                type="date"
+                value={data.birthDate}
+                onChange={(e) => setData({ ...data, birthDate: e.target.value })}
+                className="form-input"
+              />
+            </div>
+            <div>
+              <label className="form-label">Birth Time</label>
+              <input
+                type="time"
+                value={data.birthTime}
+                onChange={(e) => setData({ ...data, birthTime: e.target.value })}
+                className="form-input"
+              />
+            </div>
+          </div>
+
+          {/* Birth Place */}
+          <div style={{ marginBottom: '32px' }}>
+            <label className="form-label">Birth Place</label>
+            <input
+              type="text"
+              value={data.birthPlace}
+              onChange={(e) => setData({ ...data, birthPlace: e.target.value })}
+              className="form-input"
+              placeholder="City, Country"
+            />
+            <p style={{
+              fontSize: '14px',
+              color: '#888',
+              marginTop: '6px'
+            }}>
+              Enter the city where you were born
+            </p>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            onClick={startAnalysis}
+            disabled={!isFormValid()}
+            style={{
+              width: '100%',
+              padding: '16px',
+              fontSize: '18px',
+              fontWeight: '600',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: isFormValid() ? 'pointer' : 'not-allowed',
+              background: isFormValid() 
+                ? 'linear-gradient(135deg, #a855f7 0%, #64b5f6 100%)'
+                : '#e0e0e0',
+              color: isFormValid() ? 'white' : '#888',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            Generate My Analysis
+          </button>
+          
+          {!isFormValid() && (
+            <p style={{
+              fontSize: '14px',
+              color: '#888',
+              textAlign: 'center',
+              marginTop: '12px'
+            }}>
+              Please fill in all fields to continue
+            </p>
+          )}
+
+        </div>
 
         {/* Info Section */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-6 text-sm text-gray-500">
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '24px',
+            fontSize: '14px',
+            color: '#888'
+          }}>
             <span>🔒 Your data is private</span>
             <span>⚡ Results in seconds</span>
             <span>✨ Detailed insights</span>
@@ -191,3 +240,10 @@ export default function Assessment() {
     </div>
   );
 }
+
+<style jsx global>{`
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`}</style>

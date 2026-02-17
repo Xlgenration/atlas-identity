@@ -2,65 +2,105 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white relative overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
-      
-      {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-20">
-        <div className="max-w-3xl mx-auto text-center space-y-10">
-          
-          {/* Logo */}
-          <div className="animate-fadeIn">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 mb-6">
-              <span className="text-xl font-bold text-white">✦</span>
-            </div>
-          </div>
-
-          {/* Headline */}
-          <div className="animate-fadeIn animation-delay-100">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.9] mb-6">
-              <span className="block text-white mb-3">Who Are You</span>
-              <span className="block bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Really?</span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
-              Most people live their entire lives without truly knowing themselves. 
-              <span className="block mt-2 text-white/80 font-normal">You&apos;re about to change that.</span>
-            </p>
-          </div>
-
-          {/* Three pillars */}
-          <div className="animate-fadeIn animation-delay-200 grid grid-cols-3 gap-4 max-w-lg mx-auto text-center">
+    <div style={{ 
+      minHeight: '100vh', 
+      background: '#0a0a0f', 
+      color: '#e0e0e0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
+      <div style={{ 
+        maxWidth: '600px',
+        width: '100%',
+        textAlign: 'center'
+      }}>
+        
+        {/* Big headline */}
+        <h1 className="fadeIn" style={{
+          fontSize: '48px',
+          color: '#a855f7',
+          fontWeight: '700',
+          lineHeight: '1.1',
+          marginBottom: '24px'
+        }}>
+          Discover Who You Really Are
+        </h1>
+        
+        {/* Compelling paragraph */}
+        <p className="fadeIn delay-100" style={{
+          fontSize: '24px',
+          lineHeight: '1.7',
+          color: '#e0e0e0',
+          marginBottom: '40px',
+          maxWidth: '500px',
+          margin: '0 auto 40px'
+        }}>
+          Most people live their entire lives without truly understanding their authentic self. 
+          Your complete identity blueprint awaits.
+        </p>
+        
+        {/* Three benefit items in a card */}
+        <div className="card fadeIn delay-200" style={{
+          marginBottom: '40px',
+          textAlign: 'left'
+        }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
             <div>
-              <div className="text-purple-400 text-xs font-semibold tracking-widest mb-2">DISCOVER</div>
-              <div className="text-white/60 text-sm">Your true nature</div>
+              <h3 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '8px' }}>
+                Complete Astrological Profile
+              </h3>
+              <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
+                Detailed birth chart analysis revealing your cosmic blueprint
+              </p>
             </div>
             <div>
-              <div className="text-blue-400 text-xs font-semibold tracking-widest mb-2">UNDERSTAND</div>
-              <div className="text-white/60 text-sm">How you connect</div>
+              <h3 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '8px' }}>
+                Human Design System
+              </h3>
+              <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
+                Discover your unique energy type and decision-making strategy
+              </p>
             </div>
             <div>
-              <div className="text-purple-400 text-xs font-semibold tracking-widest mb-2">TRANSFORM</div>
-              <div className="text-white/60 text-sm">Your life path</div>
+              <h3 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '8px' }}>
+                Personality Integration
+              </h3>
+              <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
+                Comprehensive analysis of your strengths and growth areas
+              </p>
             </div>
           </div>
-
-          {/* CTA Button */}
-          <div className="animate-fadeIn animation-delay-300 pt-4">
-            <Link
-              href="/assessment"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white text-lg font-bold rounded-full shadow-2xl shadow-purple-500/20 transition-all duration-300 hover:scale-105 active:scale-95"
-            >
-              Start Your Journey →
-            </Link>
-            
-            <p className="text-white/40 text-xs mt-4 tracking-wide">
-              2 minutes • Free • Instant results
-            </p>
-          </div>
-
         </div>
+        
+        {/* Big purple gradient button */}
+        <div className="fadeIn delay-300">
+          <Link 
+            href="/assessment"
+            className="btn-primary"
+            style={{
+              fontSize: '20px',
+              padding: '20px 40px',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              marginBottom: '16px'
+            }}
+          >
+            Start Your Journey →
+          </Link>
+          
+          {/* Small subtitle */}
+          <p style={{
+            fontSize: '14px',
+            color: '#888',
+            margin: '0'
+          }}>
+            2 minutes • Free • Instant results
+          </p>
+        </div>
+        
       </div>
     </div>
   );

@@ -1,274 +1,324 @@
-'use client';
-
-import React from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { use } from 'react';
 
-interface ProfileData {
-  name: string;
-  westernZodiac: {
-    sign: string;
-    element: string;
-    description: string;
-  };
-  humanDesign: {
-    type: string;
-    strategy: string;
-    authority: string;
-    description: string;
-  };
-  personality: {
-    overview: string;
-    coreTraits: string[];
-    strengths: string[];
-    challenges: string[];
-  };
-  lifePurpose: {
-    mission: string;
-    path: string;
-  };
+interface ProfilePageProps {
+  params: { id: string };
 }
 
-function generateProfileData(id: string): ProfileData {
-  const westernSigns = [
-    { sign: 'Aries', element: 'Fire', description: 'Natural leader with pioneering spirit and endless enthusiasm for new beginnings.' },
-    { sign: 'Taurus', element: 'Earth', description: 'Grounded and determined, you build lasting foundations with patience and reliability.' },
-    { sign: 'Gemini', element: 'Air', description: 'Curious communicator with a gift for connecting ideas and people across different worlds.' },
-    { sign: 'Cancer', element: 'Water', description: 'Intuitive caretaker who creates emotional safety and nurtures deep connections.' },
-    { sign: 'Leo', element: 'Fire', description: 'Creative leader who inspires others through authentic self-expression and generous heart.' },
-    { sign: 'Virgo', element: 'Earth', description: 'Practical perfectionist with a gift for healing and improving systems around you.' }
-  ];
-  
-  const hdTypes = [
-    { type: 'Generator', strategy: 'To respond', authority: 'Sacral Authority', description: 'You have sustainable life force energy that thrives when engaged in work you love.' },
-    { type: 'Projector', strategy: 'Wait for invitation', authority: 'Splenic Authority', description: 'You are here to guide others efficiently and see the bigger picture.' },
-    { type: 'Manifestor', strategy: 'To initiate', authority: 'Emotional Authority', description: 'You are designed to initiate new projects and inform others of your actions.' },
-    { type: 'Reflector', strategy: 'Wait a lunar cycle', authority: 'Lunar Authority', description: 'You reflect the health of your community and need time for major decisions.' }
-  ];
-  
-  const hash = id.split('').reduce((a, b) => {
-    a = ((a << 5) - a) + b.charCodeAt(0);
-    return a & a;
-  }, 0);
-  
-  const name = id.split('-')[0] || 'User';
-  const westernData = westernSigns[Math.abs(hash) % westernSigns.length];
-  const hdData = hdTypes[Math.abs(hash * 2) % hdTypes.length];
-  
-  return {
-    name: name.charAt(0).toUpperCase() + name.slice(1),
-    westernZodiac: westernData,
-    humanDesign: hdData,
-    personality: {
-      overview: `You are a natural born leader with profound intuitive abilities and an unwavering commitment to authenticity. Your soul carries deep wisdom while your spirit drives innovation and transformation. You have the rare gift of seeing potential in others and situations that most people miss.`,
-      coreTraits: ['Visionary', 'Intuitive', 'Authentic', 'Transformative', 'Magnetic', 'Wise'],
-      strengths: [
-        'Exceptional intuitive abilities and deep insight into people',
-        'Natural leadership that inspires and motivates others',
-        'Ability to transform challenges into opportunities',
-        'Strong sense of authenticity and integrity',
-        'Creative problem-solving and innovative thinking',
-        'Deep capacity for meaningful relationships'
-      ],
-      challenges: [
-        'Tendency to be overly critical of yourself and others',
-        'Impatience with slower-paced individuals or processes',
-        'Difficulty maintaining work-life boundaries',
-        'Sensitivity to negative environments or energy',
-        'Tendency to overthink or second-guess decisions',
-        'Challenge with delegating and trusting others'
-      ]
-    },
-    lifePurpose: {
-      mission: 'To awaken others to their authentic power and guide transformation through wisdom, compassion, and innovative leadership.',
-      path: 'Your path involves mastering your own inner landscape first, then using your gifts to elevate others and contribute to positive change in the world.'
-    }
-  };
-}
-
-export default function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
-  const profileData = generateProfileData(resolvedParams.id);
+export default function ProfilePage({ params }: ProfilePageProps) {
+  // Extract name from ID for personalization
+  const nameFromId = params.id.split('-')[0]?.replace(/([a-z])([A-Z])/g, '$1 $2') || 'Your';
+  const displayName = nameFromId.charAt(0).toUpperCase() + nameFromId.slice(1);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white">
-      <div className="max-w-4xl mx-auto px-6 py-12">
+    <div style={{ 
+      minHeight: '100vh',
+      background: '#0a0a0f',
+      padding: '40px 20px'
+    }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         {/* Header */}
-        <div className="mb-12">
-          <Link href="/" className="inline-flex items-center text-white/60 hover:text-white transition-colors mb-8">
+        <div style={{ marginBottom: '40px' }}>
+          <Link 
+            href="/"
+            style={{
+              color: '#888',
+              textDecoration: 'none',
+              fontSize: '16px',
+              display: 'inline-block',
+              marginBottom: '24px'
+            }}
+          >
             ← Back to Home
           </Link>
           
-          <div className="text-center space-y-4">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center mx-auto">
-              <span className="text-2xl font-bold">
-                {profileData.westernZodiac.sign.slice(0, 2)}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl font-bold">
-              {profileData.name}'s Identity Map
-            </h1>
-            
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
-              Your complete personality blueprint and life guidance
-            </p>
-          </div>
+          <h1 style={{
+            fontSize: '36px',
+            color: '#a855f7',
+            fontWeight: '700',
+            marginBottom: '8px'
+          }}>
+            {displayName}'s Identity Map
+          </h1>
+          <p style={{
+            fontSize: '18px',
+            color: '#888',
+            lineHeight: '1.6'
+          }}>
+            Your complete personality blueprint and cosmic analysis
+          </p>
         </div>
 
-        {/* Main Content */}
-        <div className="space-y-12">
+        {/* Main content grid */}
+        <div style={{ 
+          display: 'grid',
+          gap: '32px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))'
+        }}>
           
-          {/* Overview */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white/5 rounded-2xl p-8 border border-white/10"
-          >
-            <h2 className="text-2xl font-bold mb-6">Your Essence</h2>
-            <p className="text-lg text-white/90 leading-relaxed mb-6">
-              {profileData.personality.overview}
+          {/* Astrological Profile */}
+          <div className="card">
+            <h3>Astrological Profile</h3>
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '20px' }}>
+                <div className="badge">☉ Sun: Leo</div>
+                <div className="badge">☽ Moon: Scorpio</div>
+                <div className="badge">↗ Rising: Virgo</div>
+                <div className="badge">☿ Mercury: Cancer</div>
+              </div>
+              <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '16px' }}>
+                Your Leo sun gives you natural leadership abilities and a magnetic presence. 
+                Combined with your Scorpio moon, you possess deep emotional intelligence and intuitive insight.
+              </p>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Planet</th>
+                    <th>Sign</th>
+                    <th>House</th>
+                    <th>Aspect</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sun</td>
+                    <td>Leo</td>
+                    <td>11th</td>
+                    <td>Trine Jupiter</td>
+                  </tr>
+                  <tr>
+                    <td>Moon</td>
+                    <td>Scorpio</td>
+                    <td>2nd</td>
+                    <td>Square Mars</td>
+                  </tr>
+                  <tr>
+                    <td>Venus</td>
+                    <td>Virgo</td>
+                    <td>12th</td>
+                    <td>Sextile Pluto</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Human Design */}
+          <div className="card">
+            <h3>Human Design System</h3>
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '20px' }}>
+                <div className="badge">Type: Manifestor</div>
+                <div className="badge">Strategy: Inform</div>
+                <div className="badge">Authority: Emotional</div>
+                <div className="badge">Profile: 3/5</div>
+              </div>
+              <p style={{ fontSize: '18px', lineHeight: '1.6' }}>
+                As a Manifestor, you're designed to initiate and create impact. Your emotional authority 
+                means you make your best decisions when you honor your emotional wave and wait for clarity.
+              </p>
+            </div>
+          </div>
+
+          {/* Personality Overview */}
+          <div className="card">
+            <h3>Personality Overview</h3>
+            <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '20px' }}>
+              You are a natural innovator with a gift for seeing the bigger picture. Your combination 
+              of leadership qualities and deep intuition makes you particularly effective at guiding 
+              others through transformation.
             </p>
-            
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Core Traits</h3>
-              <div className="flex flex-wrap gap-3">
-                {profileData.personality.coreTraits.map((trait, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-white/90 font-medium"
-                  >
-                    {trait}
-                  </span>
-                ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+              <div className="badge">Visionary</div>
+              <div className="badge">Intuitive</div>
+              <div className="badge">Magnetic</div>
+              <div className="badge">Transformative</div>
+              <div className="badge">Independent</div>
+              <div className="badge">Insightful</div>
+            </div>
+          </div>
+
+          {/* Strengths */}
+          <div className="card">
+            <h3>Core Strengths</h3>
+            <ul style={{ listStyle: 'none', padding: '0' }}>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#64b5f6' 
+                }}>
+                  ✦
+                </span>
+                <strong style={{ color: '#64b5f6' }}>Natural Leadership:</strong> You inspire others 
+                through your vision and authentic expression
+              </li>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#64b5f6' 
+                }}>
+                  ✦
+                </span>
+                <strong style={{ color: '#64b5f6' }}>Deep Intuition:</strong> Your ability to read 
+                between the lines and sense hidden dynamics
+              </li>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#64b5f6' 
+                }}>
+                  ✦
+                </span>
+                <strong style={{ color: '#64b5f6' }}>Transformative Presence:</strong> You help others 
+                discover their authentic selves
+              </li>
+            </ul>
+          </div>
+
+          {/* Growth Areas */}
+          <div className="card">
+            <h3>Growth Areas</h3>
+            <ul style={{ listStyle: 'none', padding: '0' }}>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#a855f7' 
+                }}>
+                  →
+                </span>
+                <strong style={{ color: '#a855f7' }}>Patience with Process:</strong> Learning to honor 
+                your emotional authority takes time
+              </li>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#a855f7' 
+                }}>
+                  →
+                </span>
+                <strong style={{ color: '#a855f7' }}>Communication Style:</strong> Remember to inform 
+                others before making major moves
+              </li>
+              <li style={{ 
+                fontSize: '18px', 
+                lineHeight: '1.6', 
+                marginBottom: '16px',
+                paddingLeft: '24px',
+                position: 'relative'
+              }}>
+                <span style={{ 
+                  position: 'absolute', 
+                  left: '0', 
+                  color: '#a855f7' 
+                }}>
+                  →
+                </span>
+                <strong style={{ color: '#a855f7' }}>Energy Management:</strong> Balance your intense 
+                drive with adequate rest and renewal
+              </li>
+            </ul>
+          </div>
+
+          {/* Life Path Insights */}
+          <div className="card" style={{ gridColumn: '1 / -1' }}>
+            <h3>Life Path Integration</h3>
+            <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '20px' }}>
+              Your unique combination of Leo confidence, Scorpio depth, and Manifestor energy creates 
+              a powerful formula for leadership in transformation. You're here to initiate change and 
+              help others discover their authentic power.
+            </p>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+              gap: '24px' 
+            }}>
+              <div>
+                <h4 style={{ color: '#64b5f6', fontSize: '20px', marginBottom: '12px' }}>
+                  Ideal Environments
+                </h4>
+                <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#888' }}>
+                  <li>Leadership roles in transformation</li>
+                  <li>Creative and innovative fields</li>
+                  <li>Healing and coaching professions</li>
+                  <li>Entrepreneurial ventures</li>
+                </ul>
+              </div>
+              <div>
+                <h4 style={{ color: '#64b5f6', fontSize: '20px', marginBottom: '12px' }}>
+                  Key Relationships
+                </h4>
+                <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#888' }}>
+                  <li>Partners who appreciate your intensity</li>
+                  <li>Collaborators who can match your vision</li>
+                  <li>Mentors who understand your unique path</li>
+                  <li>Communities that value authenticity</li>
+                </ul>
               </div>
             </div>
-          </motion.section>
-
-          {/* Astrology & Human Design */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* Western Zodiac */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white/5 rounded-2xl p-8 border border-white/10"
-            >
-              <h2 className="text-2xl font-bold mb-6">Zodiac Profile</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-purple-300">
-                    {profileData.westernZodiac.sign}
-                  </h3>
-                  <p className="text-white/60">{profileData.westernZodiac.element} Sign</p>
-                </div>
-                <p className="text-white/90 leading-relaxed">
-                  {profileData.westernZodiac.description}
-                </p>
-              </div>
-            </motion.section>
-
-            {/* Human Design */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white/5 rounded-2xl p-8 border border-white/10"
-            >
-              <h2 className="text-2xl font-bold mb-6">Human Design</h2>
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-blue-300">
-                    {profileData.humanDesign.type}
-                  </h3>
-                  <p className="text-white/60">{profileData.humanDesign.strategy}</p>
-                  <p className="text-white/60">{profileData.humanDesign.authority}</p>
-                </div>
-                <p className="text-white/90 leading-relaxed">
-                  {profileData.humanDesign.description}
-                </p>
-              </div>
-            </motion.section>
-            
-          </div>
-
-          {/* Strengths & Challenges */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            {/* Strengths */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-white/5 rounded-2xl p-8 border border-white/10"
-            >
-              <h2 className="text-2xl font-bold mb-6 text-green-300">Your Strengths</h2>
-              <ul className="space-y-4">
-                {profileData.personality.strengths.map((strength, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-white/90 leading-relaxed">{strength}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.section>
-
-            {/* Growth Areas */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-white/5 rounded-2xl p-8 border border-white/10"
-            >
-              <h2 className="text-2xl font-bold mb-6 text-yellow-300">Growth Areas</h2>
-              <ul className="space-y-4">
-                {profileData.personality.challenges.map((challenge, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-white/90 leading-relaxed">{challenge}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.section>
-            
-          </div>
-
-          {/* Life Purpose */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-2xl p-8 border border-purple-500/20 text-center"
-          >
-            <h2 className="text-2xl font-bold mb-6">Your Life Purpose</h2>
-            <p className="text-lg text-white/90 leading-relaxed mb-6">
-              {profileData.lifePurpose.mission}
-            </p>
-            <p className="text-white/80 leading-relaxed">
-              {profileData.lifePurpose.path}
-            </p>
-          </motion.section>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/couple"
-              className="px-8 py-4 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-semibold rounded-lg transition-all hover:scale-105 text-center"
-            >
-              Find Your Match
-            </Link>
-            <Link
-              href="/"
-              className="px-8 py-4 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/5 transition-all text-center"
-            >
-              Create Another Profile
-            </Link>
           </div>
 
         </div>
+
+        {/* Action buttons */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginTop: '48px',
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '20px',
+          flexWrap: 'wrap'
+        }}>
+          <Link href="/couple" className="btn-primary">
+            Explore Compatibility
+          </Link>
+          <Link 
+            href="/assessment" 
+            className="btn-primary"
+            style={{
+              background: 'transparent',
+              border: '2px solid #a855f7',
+              color: '#a855f7'
+            }}
+          >
+            Create Another Profile
+          </Link>
+        </div>
+
       </div>
     </div>
   );
