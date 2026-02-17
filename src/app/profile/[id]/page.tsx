@@ -110,11 +110,11 @@ export default function ProfilePage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: '1fr' }}>
           
           <div className="card">
             <h3>Astrologisches Profil</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '8px', marginBottom: '20px' }}>
               <div className="badge">☉ Sonne: {analysis.astrology.sunSign}</div>
               <div className="badge">☽ Mond: {analysis.astrology.moonSign}</div>
               <div className="badge">↗ Aszendent: {analysis.astrology.risingSign}</div>
@@ -132,7 +132,7 @@ export default function ProfilePage() {
 
           <div className="card">
             <h3>Human Design System</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '8px', marginBottom: '20px' }}>
               <div className="badge">Typ: {analysis.humanDesign.type}</div>
               <div className="badge">Strategie: {analysis.humanDesign.strategy}</div>
               <div className="badge">Autorität: {analysis.humanDesign.authority}</div>
@@ -148,7 +148,7 @@ export default function ProfilePage() {
             <p style={{ fontSize: '18px', lineHeight: '1.6', marginBottom: '20px' }}>
               {analysis.personality.overview}
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '8px' }}>
               {analysis.personality.traits.map((trait, index) => (
                 <div key={index} className="badge">{trait}</div>
               ))}

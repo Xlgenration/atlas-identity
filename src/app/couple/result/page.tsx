@@ -127,7 +127,7 @@ export default function CoupleResultPage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: '1fr' }}>
           
           {/* Kategorie-Analyse */}
           <div className="card">

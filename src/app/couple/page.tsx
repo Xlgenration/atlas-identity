@@ -155,7 +155,7 @@ export default function CouplePage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', marginBottom: '40px' }}>
+        <div style={{ display: 'grid', gap: '32px', gridTemplateColumns: '1fr', marginBottom: '40px' }}>
           
           {/* Person 1 */}
           <div className="card" style={{

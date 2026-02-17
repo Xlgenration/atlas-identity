@@ -30,6 +30,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 html,
@@ -89,6 +91,9 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 22px;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 th {
@@ -194,9 +199,12 @@ td {
   color: var(--accent-primary);
   padding: 4px 12px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   border: 1px solid rgba(168, 85, 247, 0.3);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
 }
 
 /* Form styles for assessment page */
