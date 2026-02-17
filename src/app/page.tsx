@@ -25,7 +25,7 @@ export default function Home() {
           lineHeight: '1.1',
           marginBottom: '24px'
         }}>
-          Discover Who You Really Are
+          Entdecke wer du wirklich bist
         </h1>
         
         {/* Compelling paragraph */}
@@ -37,8 +37,8 @@ export default function Home() {
           maxWidth: '500px',
           margin: '0 auto 40px'
         }}>
-          Most people live their entire lives without truly understanding their authentic self. 
-          Your complete identity blueprint awaits.
+          Die meisten Menschen leben ihr ganzes Leben, ohne sich selbst wirklich zu verstehen. 
+          Dein persönlicher Identity Blueprint wartet auf dich.
         </p>
         
         {/* Three benefit items in a card */}
@@ -49,10 +49,10 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
             <div>
               <h3 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '8px' }}>
-                Complete Astrological Profile
+                Astrologisches Profil
               </h3>
               <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
-                Detailed birth chart analysis revealing your cosmic blueprint
+                Detaillierte Geburtshoroskop-Analyse — dein kosmischer Bauplan
               </p>
             </div>
             <div>
@@ -60,15 +60,15 @@ export default function Home() {
                 Human Design System
               </h3>
               <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
-                Discover your unique energy type and decision-making strategy
+                Entdecke deinen Energietyp und deine Entscheidungsstrategie
               </p>
             </div>
             <div>
               <h3 style={{ color: '#64b5f6', fontSize: '18px', marginBottom: '8px' }}>
-                Personality Integration
+                Persönlichkeitsanalyse
               </h3>
               <p style={{ fontSize: '16px', color: '#888', margin: '0' }}>
-                Comprehensive analysis of your strengths and growth areas
+                Umfassende Analyse deiner Stärken und Wachstumsbereiche
               </p>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function Home() {
               marginBottom: '16px'
             }}
           >
-            Start Your Journey →
+            Starte deine Reise →
           </Link>
           
           {/* Small subtitle */}
@@ -97,7 +97,7 @@ export default function Home() {
             color: '#888',
             margin: '0'
           }}>
-            2 minutes • Free • Instant results
+            2 Minuten • Kostenlos • Sofortige Ergebnisse
           </p>
         </div>
         

@@ -21,7 +21,7 @@ export default function CouplePage() {
               marginBottom: '24px'
             }}
           >
-            ← Back to Home
+            ← Zurück
           </Link>
           
           <h1 style={{
@@ -30,7 +30,7 @@ export default function CouplePage() {
             fontWeight: '700',
             marginBottom: '8px'
           }}>
-            Relationship Compatibility
+            Beziehungs-Kompatibilität
           </h1>
           <p style={{
             fontSize: '18px',
@@ -41,7 +41,7 @@ export default function CouplePage() {
           </p>
         </div>
 
-        {/* Compatibility Score - Prominent */}
+        {/* Compatibility Wert - Prominent */}
         <div className="card" style={{ 
           textAlign: 'center',
           marginBottom: '40px',
@@ -53,7 +53,7 @@ export default function CouplePage() {
             marginBottom: '16px',
             border: 'none'
           }}>
-            Overall Compatibility Score
+            Gesamt-Kompatibilitätswert
           </h2>
           <div style={{ 
             fontSize: '64px', 
@@ -80,25 +80,25 @@ export default function CouplePage() {
           gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))'
         }}>
           
-          {/* Category Breakdown */}
+          {/* Kategorie Breakdown */}
           <div className="card">
-            <h3>Compatibility Breakdown</h3>
+            <h3>Kompatibilitäts-Analyse</h3>
             <table style={{ marginTop: '20px' }}>
               <thead>
                 <tr>
-                  <th>Category</th>
-                  <th>Score</th>
+                  <th>Kategorie</th>
+                  <th>Wert</th>
                   <th>Analysis</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Emotional Connection</td>
+                  <td>Emotionale Verbindung</td>
                   <td style={{ color: '#64b5f6', fontWeight: '600' }}>92%</td>
                   <td>Deep intuitive bond</td>
                 </tr>
                 <tr>
-                  <td>Communication Style</td>
+                  <td>Kommunikation Style</td>
                   <td style={{ color: '#64b5f6', fontWeight: '600' }}>85%</td>
                   <td>Complementary approaches</td>
                 </tr>
@@ -108,7 +108,7 @@ export default function CouplePage() {
                   <td>Shared vision alignment</td>
                 </tr>
                 <tr>
-                  <td>Energy Dynamics</td>
+                  <td>Energie-Dynamik</td>
                   <td style={{ color: '#a855f7', fontWeight: '600' }}>78%</td>
                   <td>Balancing needed</td>
                 </tr>
@@ -161,9 +161,9 @@ export default function CouplePage() {
             </div>
           </div>
 
-          {/* Relationship Strengths */}
+          {/* Beziehungsstärken */}
           <div className="card">
-            <h3>Relationship Strengths</h3>
+            <h3>Beziehungsstärken</h3>
             <ul style={{ listStyle: 'none', padding: '0' }}>
               <li style={{ 
                 fontSize: '18px', 
@@ -238,7 +238,7 @@ export default function CouplePage() {
 
           {/* Growth Challenges */}
           <div className="card">
-            <h3>Growth Opportunities</h3>
+            <h3>Wachstumschancen</h3>
             <ul style={{ listStyle: 'none', padding: '0' }}>
               <li style={{ 
                 fontSize: '18px', 
@@ -254,7 +254,7 @@ export default function CouplePage() {
                 }}>
                   →
                 </span>
-                <strong style={{ color: '#a855f7' }}>Communication Timing:</strong> Manifestor 
+                <strong style={{ color: '#a855f7' }}>Kommunikation Timing:</strong> Manifestor 
                 needs to inform, Generator needs to respond - honoring each other's process
               </li>
               <li style={{ 
@@ -296,7 +296,7 @@ export default function CouplePage() {
 
           {/* Relationship Recommendations */}
           <div className="card" style={{ gridColumn: '1 / -1' }}>
-            <h3>Relationship Guidance</h3>
+            <h3>Beziehungsberatung</h3>
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
@@ -325,7 +325,7 @@ export default function CouplePage() {
                   fontSize: '20px', 
                   marginBottom: '16px' 
                 }}>
-                  Communication Tips
+                  Kommunikation Tips
                 </h4>
                 <ul style={{ fontSize: '16px', lineHeight: '1.6', color: '#e0e0e0' }}>
                   <li style={{ marginBottom: '8px' }}>Manifestor: Always inform before acting</li>
@@ -376,7 +376,7 @@ export default function CouplePage() {
               color: '#a855f7'
             }}
           >
-            Back to Home
+            Zurück
           </Link>
         </div>
 
