@@ -74,10 +74,10 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Two CTA Buttons */}
+        {/* Single CTA */}
         <div className="fadeIn delay-300" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
           <Link 
-            href="/assessment"
+            href="/start"
             className="btn-primary"
             style={{
               fontSize: '20px',
@@ -90,28 +90,7 @@ export default function Home() {
               textAlign: 'center'
             }}
           >
-            Mich selbst entdecken →
-          </Link>
-          
-          <Link 
-            href="/couple"
-            style={{
-              fontSize: '20px',
-              padding: '20px 40px',
-              borderRadius: '12px',
-              textDecoration: 'none',
-              display: 'inline-block',
-              width: '100%',
-              maxWidth: '400px',
-              textAlign: 'center',
-              background: 'transparent',
-              border: '2px solid #a855f7',
-              color: '#a855f7',
-              fontWeight: '600',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            Kompatibilität prüfen ♡
+            Reise beginnen →
           </Link>
           
           <p style={{
